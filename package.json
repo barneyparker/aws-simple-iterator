@@ -1,0 +1,35 @@
+{
+  "name": "aws-simple-iterator",
+  "version": "1.0.0",
+  "description": "Simple AWS Iterator functions",
+  "main": "index.js",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barneyparker/aws-simple-iterator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/barneyparker/aws-simple-iterator/issues"
+  },
+  "homepage": "https://github.com/barneyparker/aws-simple-iterator#readme",
+  "keywords": [
+    "AWS"
+  ],
+  "author": "Barney Parker",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "version:patch": "npm version patch --commit-hooks=false",
+    "version:minor": "npm version minor --commit-hooks=false",
+    "version:major": "npm version major --commit-hooks=false",
+    "postversion": "git push && git push --tags && npm publish",
+    "doc": "jsdoc2md -t README.hbs index.js > README.md"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "eslint": "^9.6.0",
+    "eslint-config-barney": "^2.0.0",
+    "eslint-plugin-jsdoc": "^48.5.2",
+    "jsdoc-to-markdown": "^8.0.1"
+  }
+}
