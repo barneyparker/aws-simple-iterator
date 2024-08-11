@@ -35,39 +35,40 @@
 
 /**
  * @typedef {object} iterParams
- * @param {Object} params - The parameters to pass to the function
- * @param {Function} func - The function to call
- * @param {string} dataKey - The key in the response that contains the data
- * @param {string} returnedNextToken - The key in the response that contains the next token
- * @param {string} paramNextToken - The key in the parameters to set the next token
+ * @property {Object} params - The parameters to pass to the function
+ * @property {Function} func - The function to call
+ * @property {string} dataKey - The key in the response that contains the data
+ * @property {string} returnedNextToken - The key in the response that contains the next token
+ * @property {string} paramNextToken - The key in the parameters to set the next token
  */
 
 /**
  * Paginate through results and yield each page
  *
- * @param {iterParams} args
+ * @param {iterParams} opts
  * @returns {AsyncGenerator}
  */
-export async function* paginate (args) {
-  const opts = {
-    parameters: {},
-    dataKey: 'Items',
-    returnedNextToken: 'NextToken',
-    paramNextToken: 'NextToken',
-    ...args
-  }
+export async function* paginate (opts) {
+  if(!opts.params) { throw new Error('params is required') }
+  if(!opts.func) { throw new Error('func is required') }
+  if(!opts.dataKey) { throw new Error('dataKey is required') }
+  if(!opts.returnedNextToken) { throw new Error('returnedNextToken is required') }
+  if(!opts.paramNextToken) { throw new Error('paramNextToken is required') }
+
   do {
-    const result = await opts.func(opts.parameters)
+    const result = await opts.func(opts.params)
     // yield the whole result
     yield result[opts.dataKey]
-    opts.parameters[opts.paramNextToken] = result[opts.returnedNextToken]
-  } while (opts.parameters[opts.paramNextToken])
+    // @ts-ignore
+    opts.params[opts.paramNextToken] = result[opts.returnedNextToken]
+  // @ts-ignore
+  } while (opts.params[opts.paramNextToken])
 }
 
 /**
  * Get all the results and return as an array
  * @param {iterParams} args
- * @returns {Promise<Array>}
+ * @returns {Promise<any[]>}
  */
 export const getAll = async (args) => {
   const results = []
