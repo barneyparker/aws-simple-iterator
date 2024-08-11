@@ -1,6 +1,6 @@
 {
   "name": "aws-simple-iterator",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Simple AWS Iterator functions",
   "main": "index.js",
   "type": "module",
